@@ -1,4 +1,4 @@
-import 'package:onedrive_client/models/auth/onedrive/drive_item.dart';
+import '../onedrive/drive_item.dart';
 
 /// https://docs.microsoft.com/en-us/graph/api/resources/folderview?view=graph-rest-1.0
 class FolderView {
