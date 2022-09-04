@@ -1,0 +1,20 @@
+@baseurl = https://graph.microsoft.com/v1.0
+
+@token = 
+
+#List available drives for current users
+GET {{baseurl}}/me/drives
+Authorization: bearer {{token}}
+
+###
+
+# Get root drive
+GET {{baseurl}}/me/drive/root
+Authorization: bearer {{token}}
+
+###
+
+
+# List all items in root drive
+GET {{baseurl}}/me/drive/root/children
+Authorization: bearer {{token}}
