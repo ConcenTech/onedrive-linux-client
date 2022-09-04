@@ -11,6 +11,8 @@ import 'models/auth/auth_state.dart';
 import 'providers/auth/auth_providers.dart';
 import 'routes/app_router.gr.dart';
 
+//TODO: Use the 'watcher' package to watch the local file system.
+
 void main(args) {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -25,6 +27,7 @@ void main(args) {
       child: MainApp(),
     ),
   );
+
 
   doWhenWindowReady(() {
     appWindow?.alignment = Alignment.center;
