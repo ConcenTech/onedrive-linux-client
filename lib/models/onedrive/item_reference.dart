@@ -1,3 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import '../onedrive/drive.dart';
 import '../onedrive/drive_item.dart';
 
@@ -51,4 +54,35 @@ class ItemReference {
   ///
   /// For OneDrive, this property is not populated.
   final String siteId;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'driveId': driveId,
+      'driveType': driveType,
+      'id': id,
+      'name': name,
+      'path': path,
+      'shareId': shareId,
+      'sharepointIds': sharepointIds,
+      'siteId': siteId,
+    };
+  }
+
+  factory ItemReference.fromMap(Map<String, dynamic> map) {
+    return ItemReference(
+      driveId: map['driveId'] as String,
+      driveType: map['driveType'] as String,
+      id: map['id'] as String,
+      name: map['name'] as String,
+      path: map['path'] as String,
+      shareId: map['shareId'] as String,
+      sharepointIds: map['sharepointIds'] as String,
+      siteId: map['siteId'] as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ItemReference.fromJson(String source) =>
+      ItemReference.fromMap(json.decode(source) as Map<String, dynamic>);
 }

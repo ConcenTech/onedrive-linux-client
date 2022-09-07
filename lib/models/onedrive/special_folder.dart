@@ -1,3 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 ///The SpecialFolder resource groups special folder-related data items into a single structure.
 ///
 /// If a DriveItem has a non-null specialFolder facet, the item represents a special (named) folder. Special folders can be accessed directly via the special folders collection.
@@ -23,4 +26,21 @@ class SpecialFolder {
   /// The unique identifier for this item in the
   /// `/drive/special` collection
   final String name;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'name': name,
+    };
+  }
+
+  factory SpecialFolder.fromMap(Map<String, dynamic> map) {
+    return SpecialFolder(
+      name: map['name'] as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory SpecialFolder.fromJson(String source) =>
+      SpecialFolder.fromMap(json.decode(source) as Map<String, dynamic>);
 }

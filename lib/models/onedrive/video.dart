@@ -1,3 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'drive_item.dart';
 
 ///The video resource groups video-related data items
@@ -52,4 +55,39 @@ class Video {
 
   /// Width of the video, in pixels.
   final int width;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'audioBitsPerSample': audioBitsPerSample,
+      'audioChannels': audioChannels,
+      'audioFormat': audioFormat,
+      'audioSamplesPerSecond': audioSamplesPerSecond,
+      'bitrate': bitrate,
+      'duration': duration,
+      'fourCC': fourCC,
+      'frameRate': frameRate,
+      'height': height,
+      'width': width,
+    };
+  }
+
+  factory Video.fromMap(Map<String, dynamic> map) {
+    return Video(
+      audioBitsPerSample: map['audioBitsPerSample'] as int,
+      audioChannels: map['audioChannels'] as int,
+      audioFormat: map['audioFormat'] as String,
+      audioSamplesPerSecond: map['audioSamplesPerSecond'] as int,
+      bitrate: map['bitrate'] as int,
+      duration: map['duration'] as int,
+      fourCC: map['fourCC'] as String,
+      frameRate: map['frameRate'] as double,
+      height: map['height'] as int,
+      width: map['width'] as int,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Video.fromJson(String source) =>
+      Video.fromMap(json.decode(source) as Map<String, dynamic>);
 }

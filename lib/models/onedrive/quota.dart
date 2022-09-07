@@ -1,3 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'drive.dart';
 
 /// https://docs.microsoft.com/en-us/graph/api/resources/quota?view=graph-rest-1.0
@@ -27,6 +30,37 @@ class Quota {
 
   /// Enumeration value that indicates the state of the storage space.
   final DriveState state;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'total': total,
+      'used': used,
+      'remaining': remaining,
+      'deleted': deleted,
+      'state': state.name,
+    };
+  }
+
+  factory Quota.fromMap(Map<String, dynamic> map) {
+    return Quota(
+      total: map['total'] as int,
+      used: map['used'] as int,
+      remaining: map['remaining'] as int,
+      deleted: map['deleted'] as int,
+      state: _driveStateFromString(map['state'] as String),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Quota.fromJson(String source) =>
+      Quota.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+DriveState _driveStateFromString(String state) {
+  return DriveState.values.firstWhere(
+    (value) => value.name == state,
+  );
 }
 
 enum DriveState {

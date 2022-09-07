@@ -1,3 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'identity_set.dart';
 import 'quota.dart';
 
@@ -61,6 +64,53 @@ class Drive {
 
   /// URL that displays the resource in the browser.
   final Uri webUrl;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'createdBy': createdBy.toMap(),
+      'createdDateTime': createdDateTime.toIso8601String(),
+      'description': description,
+      'driveType': driveType.name,
+      'id': id,
+      'lastModifiedBy': lastModifiedBy.toMap(),
+      'lastModifiedDateTime': lastModifiedDateTime.toIso8601String(),
+      'name': name,
+      'owner': owner?.toMap(),
+      'quota': quota.toMap(),
+      'webUrl': webUrl.path,
+    };
+  }
+
+  factory Drive.fromMap(Map<String, dynamic> map) {
+    return Drive(
+      createdBy: IdentitySet.fromMap(map['createdBy'] as Map<String, dynamic>),
+      createdDateTime: DateTime.parse(map['createdDateTime'] as String),
+      description: map['description'] as String,
+      driveType: _driveTypeFromString(map['driveType'] as String),
+      id: map['id'] as String,
+      lastModifiedBy:
+          IdentitySet.fromMap(map['lastModifiedBy'] as Map<String, dynamic>),
+      lastModifiedDateTime:
+          DateTime.parse(map['lastModifiedDateTime'] as String),
+      name: map['name'] as String,
+      owner: map['owner'] != null
+          ? IdentitySet.fromMap(map['owner'] as Map<String, dynamic>)
+          : null,
+      quota: Quota.fromMap(map['quota'] as Map<String, dynamic>),
+      webUrl: Uri.parse(map['webUrl'] as String),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Drive.fromJson(String source) =>
+      Drive.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+DriveType _driveTypeFromString(String type) {
+  return DriveType.values.firstWhere(
+    (value) => value.name == type,
+  );
 }
 
 enum DriveType {

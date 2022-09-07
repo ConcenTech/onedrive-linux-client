@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'audio.dart';
@@ -238,4 +240,131 @@ class DriveItem {
   bool get isSuspectedMalware => malware != null;
   bool get isRoot => root != null;
   bool get hasPendingOperations => pendingOperations != null;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'audio': audio?.toMap(),
+      'bundle': bundle?.toMap(),
+      'content': content,
+      'createdBy': createdBy.toMap(),
+      'creationDateTime': creationDateTime.toIso8601String(),
+      'cTag': cTag,
+      'deleted': deleted?.toMap(),
+      'description': description,
+      'eTag': eTag,
+      'file': file?.toMap(),
+      'fileSystemInfo': fileSystemInfo.toMap(),
+      'folder': folder?.toMap(),
+      'id': id,
+      'image': image?.toMap(),
+      'lastModifiedBy': lastModifiedBy.toMap(),
+      'lastModifiedDateTime': lastModifiedDateTime.toIso8601String(),
+      'location': location?.toMap(),
+      'malware': malware?.toMap(),
+      'name': name,
+      'package': package?.toMap(),
+      'parentReference': parentReference?.toMap(),
+      'pendingOperations': pendingOperations?.toMap(),
+      'photo': photo?.toMap(),
+      'publication': publication?.toMap(),
+      'remoteItem': remoteItem?.toMap(),
+      'root': root != null ? {} : null,
+      'searchResult': searchResult?.toMap(),
+      'shared': shared?.toMap(),
+      'sharePointIds': sharePointIds?.toMap(),
+      'size': size,
+      'specialFolder': specialFolder?.toMap(),
+      'video': video?.toMap(),
+      'webDavUrl': webDavUrl.path,
+      'webUrl': webUrl.path,
+    };
+  }
+
+  factory DriveItem.fromMap(Map<String, dynamic> map) {
+    return DriveItem(
+      audio: map['audio'] != null
+          ? Audio.fromMap(map['audio'] as Map<String, dynamic>)
+          : null,
+      bundle: map['bundle'] != null
+          ? Bundle.fromMap(map['bundle'] as Map<String, dynamic>)
+          : null,
+      content: map['content'],
+      createdBy: IdentitySet.fromMap(map['createdBy'] as Map<String, dynamic>),
+      creationDateTime: DateTime.parse(map['creationDateTime'] as String),
+      cTag: map['cTag'] != null ? map['cTag'] as String : null,
+      deleted: map['deleted'] != null
+          ? Deleted.fromMap(map['deleted'] as Map<String, dynamic>)
+          : null,
+      description:
+          map['description'] != null ? map['description'] as String : null,
+      eTag: map['eTag'] as String,
+      file: map['file'] != null
+          ? File.fromMap(map['file'] as Map<String, dynamic>)
+          : null,
+      fileSystemInfo:
+          FileSystemInfo.fromMap(map['fileSystemInfo'] as Map<String, dynamic>),
+      folder: map['folder'] != null
+          ? Folder.fromMap(map['folder'] as Map<String, dynamic>)
+          : null,
+      id: map['id'] as String,
+      image: map['image'] != null
+          ? Image.fromMap(map['image'] as Map<String, dynamic>)
+          : null,
+      lastModifiedBy:
+          IdentitySet.fromMap(map['lastModifiedBy'] as Map<String, dynamic>),
+      lastModifiedDateTime:
+          DateTime.parse(map['lastModifiedDateTime'] as String),
+      location: map['location'] != null
+          ? GeoCoordinates.fromMap(map['location'] as Map<String, dynamic>)
+          : null,
+      malware: map['malware'] != null
+          ? Malware.fromMap(map['malware'] as Map<String, dynamic>)
+          : null,
+      name: map['name'] as String,
+      package: map['package'] != null
+          ? Package.fromMap(map['package'] as Map<String, dynamic>)
+          : null,
+      parentReference: map['parentReference'] != null
+          ? ItemReference.fromMap(
+              map['parentReference'] as Map<String, dynamic>)
+          : null,
+      pendingOperations: map['pendingOperations'] != null
+          ? PendingOperations.fromMap(
+              map['pendingOperations'] as Map<String, dynamic>)
+          : null,
+      photo: map['photo'] != null
+          ? Photo.fromMap(map['photo'] as Map<String, dynamic>)
+          : null,
+      publication: map['publication'] != null
+          ? PublicationFacet.fromMap(map['publication'] as Map<String, dynamic>)
+          : null,
+      remoteItem: map['remoteItem'] != null
+          ? RemoteItem.fromMap(map['remoteItem'] as Map<String, dynamic>)
+          : null,
+      root: map['root'] != null ? Root() : null,
+      searchResult: map['searchResult'] != null
+          ? SearchResult.fromMap(map['searchResult'] as Map<String, dynamic>)
+          : null,
+      shared: map['shared'] != null
+          ? Shared.fromMap(map['shared'] as Map<String, dynamic>)
+          : null,
+      sharePointIds: map['sharePointIds'] != null
+          ? SharePointIds.fromMap(map['sharePointIds'] as Map<String, dynamic>)
+          : null,
+      size: map['size'] as int,
+      specialFolder: map['specialFolder'] != null
+          ? SpecialFolder.fromMap(map['specialFolder'] as Map<String, dynamic>)
+          : null,
+      video: map['video'] != null
+          ? Video.fromMap(map['video'] as Map<String, dynamic>)
+          : null,
+      webDavUrl: Uri.parse(map['webDavUrl'] as String),
+      webUrl: Uri.parse(map['webUrl'] as String),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory DriveItem.fromJson(String source) =>
+      DriveItem.fromMap(json.decode(source) as Map<String, dynamic>);
 }

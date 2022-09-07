@@ -1,3 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 /// https://docs.microsoft.com/en-us/graph/api/resources/package?view=graph-rest-1.0
 class Package {
   /// The package resource indicates that a driveItem
@@ -24,4 +27,21 @@ class Package {
   /// other package types to be returned and handle them
   /// accordingly.
   final String type;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'type': type,
+    };
+  }
+
+  factory Package.fromMap(Map<String, dynamic> map) {
+    return Package(
+      type: map['type'] as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Package.fromJson(String source) =>
+      Package.fromMap(json.decode(source) as Map<String, dynamic>);
 }

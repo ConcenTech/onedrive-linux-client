@@ -1,3 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import '../onedrive/drive_item.dart';
 
 /// https://docs.microsoft.com/en-us/graph/api/resources/folderview?view=graph-rest-1.0
@@ -20,6 +23,48 @@ class FolderView {
   /// The type of view that should be used to represent
   /// the folder.
   final ViewType viewType;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'sortBy': sortBy == SortBy.defaultSort ? 'default' : sortBy.name,
+      'sortOrder': sortOrder.name,
+      'viewType': viewType == ViewType.defaultType ? 'default' : viewType.name,
+    };
+  }
+
+  factory FolderView.fromMap(Map<String, dynamic> map) {
+    return FolderView(
+      sortBy: _sortByFromString(map['sortBy'] as String),
+      sortOrder: _sortOrderFromString(map['sortOrder'] as String),
+      viewType: _viewTypeFromString(map['viewType'] as String),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory FolderView.fromJson(String source) =>
+      FolderView.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+SortBy _sortByFromString(String sort) {
+  return SortBy.values.firstWhere(
+    (value) => value.name == sort,
+    orElse: () => SortBy.defaultSort,
+  );
+}
+
+SortOrder _sortOrderFromString(String sort) {
+  return SortOrder.values.firstWhere(
+    (value) => value.name == sort,
+    orElse: () => SortOrder.ascending,
+  );
+}
+
+ViewType _viewTypeFromString(String type) {
+  return ViewType.values.firstWhere(
+    (value) => value.name == type,
+    orElse: () => ViewType.defaultType,
+  );
 }
 
 enum SortBy {

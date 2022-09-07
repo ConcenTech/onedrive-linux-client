@@ -1,3 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'album.dart';
 import 'drive_item.dart';
 
@@ -29,4 +32,25 @@ class Bundle {
   /// If the bundle is an [Album], then  the album
   /// property is included.
   final Album? album;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'childCount': childCount,
+      'album': album?.toMap(),
+    };
+  }
+
+  factory Bundle.fromMap(Map<String, dynamic> map) {
+    return Bundle(
+      childCount: map['childCount'] as int,
+      album: map['album'] != null
+          ? Album.fromMap(map['album'] as Map<String, dynamic>)
+          : null,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Bundle.fromJson(String source) =>
+      Bundle.fromMap(json.decode(source) as Map<String, dynamic>);
 }

@@ -1,3 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'drive_item.dart';
 import 'hashes.dart';
 
@@ -26,4 +29,25 @@ class File {
   /// might not be the value provided while the file
   /// was uploaded.
   final String mimeType;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'hashes': hashes?.toMap(),
+      'mimeType': mimeType,
+    };
+  }
+
+  factory File.fromMap(Map<String, dynamic> map) {
+    return File(
+      hashes: map['hashes'] != null
+          ? Hashes.fromMap(map['hashes'] as Map<String, dynamic>)
+          : null,
+      mimeType: map['mimeType'] as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory File.fromJson(String source) =>
+      File.fromMap(json.decode(source) as Map<String, dynamic>);
 }
