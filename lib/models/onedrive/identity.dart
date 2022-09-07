@@ -23,7 +23,7 @@ class Identity {
   /// the API might show the new value in a future response,
   /// but the items associated with the user won't show up as
   /// having changed when using 'delta'
-  final String displayName;
+  final String? displayName;
 
   /// Unique identifier for the identity
   final String id;
@@ -37,7 +37,7 @@ class Identity {
 
   factory Identity.fromMap(Map<String, dynamic> map) {
     return Identity(
-      displayName: map['displayName'] as String,
+      displayName: map['displayName'] as String?,
       id: map['id'] as String,
     );
   }

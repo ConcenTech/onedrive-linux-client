@@ -31,7 +31,7 @@ class ItemReference {
   final String id;
 
   /// The name of the item being referenced
-  final String name;
+  final String? name;
 
   /// Path that can be used to navigate to the item.
   final String path;
@@ -39,11 +39,11 @@ class ItemReference {
   /// A unique identifier for a shared resource that
   /// can be accessed via the [Shares](https://docs.microsoft.com/en-us/graph/api/shares-get?view=graph-rest-1.0)
   /// API.
-  final String shareId;
+  final String? shareId;
 
   /// Returns identifiers useful for SharePoint REST
   /// compatibility.
-  final String sharepointIds;
+  final String? sharepointIds;
 
   /// For OneDrive for Business and SharePoint, this property
   ///  represents the ID of the site that contains the parent
@@ -53,7 +53,7 @@ class ItemReference {
   /// of the site.
   ///
   /// For OneDrive, this property is not populated.
-  final String siteId;
+  final String? siteId;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -73,11 +73,11 @@ class ItemReference {
       driveId: map['driveId'] as String,
       driveType: map['driveType'] as String,
       id: map['id'] as String,
-      name: map['name'] as String,
+      name: map['name'] as String?,
       path: map['path'] as String,
-      shareId: map['shareId'] as String,
-      sharepointIds: map['sharepointIds'] as String,
-      siteId: map['siteId'] as String,
+      shareId: map['shareId'] as String?,
+      sharepointIds: map['sharepointIds'] as String?,
+      siteId: map['siteId'] as String?,
     );
   }
 

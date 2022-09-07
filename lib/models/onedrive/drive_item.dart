@@ -25,8 +25,6 @@ import 'sharepoint_ids.dart';
 import 'special_folder.dart';
 import 'video.dart';
 
-//TODO: DateTime values with arrive as "Sting(timestamp)".
-
 /// The driveItem resource represents a file, folder, or other item
 /// stored in a drive.
 ///
@@ -122,7 +120,7 @@ class DriveItem {
   final IdentitySet createdBy;
 
   /// Date and time of item creation.
-  final DateTime creationDateTime;
+  final DateTime? creationDateTime;
 
   /// An eTag for the content of this item. The eTag
   /// is not changed if only the metadata is changed.
@@ -225,7 +223,7 @@ class DriveItem {
   final Video? video;
 
   /// DAV compatible URL for the item.
-  final Uri webDavUrl;
+  final Uri? webDavUrl;
 
   /// URL that displays the resource in the browser.
   final Uri webUrl;
@@ -247,7 +245,7 @@ class DriveItem {
       'bundle': bundle?.toMap(),
       'content': content,
       'createdBy': createdBy.toMap(),
-      'creationDateTime': creationDateTime.toIso8601String(),
+      'creationDateTime': creationDateTime?.toIso8601String(),
       'cTag': cTag,
       'deleted': deleted?.toMap(),
       'description': description,
@@ -275,7 +273,7 @@ class DriveItem {
       'size': size,
       'specialFolder': specialFolder?.toMap(),
       'video': video?.toMap(),
-      'webDavUrl': webDavUrl.path,
+      'webDavUrl': webDavUrl?.path,
       'webUrl': webUrl.path,
     };
   }
@@ -290,7 +288,9 @@ class DriveItem {
           : null,
       content: map['content'],
       createdBy: IdentitySet.fromMap(map['createdBy'] as Map<String, dynamic>),
-      creationDateTime: DateTime.parse(map['creationDateTime'] as String),
+      creationDateTime: map['creationDateTime'] != null
+          ? DateTime.parse(map['creationDateTime'] as String)
+          : null,
       cTag: map['cTag'] != null ? map['cTag'] as String : null,
       deleted: map['deleted'] != null
           ? Deleted.fromMap(map['deleted'] as Map<String, dynamic>)
@@ -358,7 +358,9 @@ class DriveItem {
       video: map['video'] != null
           ? Video.fromMap(map['video'] as Map<String, dynamic>)
           : null,
-      webDavUrl: Uri.parse(map['webDavUrl'] as String),
+      webDavUrl: map['webDavUrl'] != null
+          ? Uri.parse(map['webDavUrl'] as String)
+          : null,
       webUrl: Uri.parse(map['webUrl'] as String),
     );
   }
